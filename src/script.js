@@ -16,7 +16,7 @@ class Todo {
   }
 
   stateClasses = {
-    isVisivle: 'is-visible',
+    isVisible: 'is-visible',
     isDisappearing: 'is-disappearing'
   }
 
@@ -54,7 +54,7 @@ class Todo {
 
       return Array.isArray(parsedData) ? parsedData : []
 
-    } catch (error) {
+    } catch {
       console.error('Todo items parse error')
       return []
     }
@@ -72,7 +72,7 @@ class Todo {
     this.totalTasksElement.textContent = this.state.items.length
 
     this.deleteAllButtonElement.classList.toggle(
-      this.stateClasses.isVisivle,
+      this.stateClasses.isVisible,
       this.state.items.length > 0
     )
 
@@ -122,7 +122,8 @@ class Todo {
     `).join('')
 
     const isEmptyFilteredItems = this.state.filteredItems?.length === 0
-    const isEmptyItems = this.emptyMessageElement.length === 0
+    const isEmptyItems = this.state.items.length === 0
+
     this.emptyMessageElement.textContent =
       isEmptyFilteredItems ? 'Tasks not found'
         : isEmptyItems ? 'There are no tasks yet'
@@ -222,7 +223,7 @@ class Todo {
     }
   }
 
-  onCklick = ({ target }) => {
+  onClick = ({ target }) => {
     if (target.matches(this.selectors.itemDeleteButton)) {
       const itemElement = target.closest(this.selectors.item)
       const itemCheckboxElement = itemElement.querySelector(this.selectors.itemCheckbox)
@@ -246,7 +247,7 @@ class Todo {
     this.searchTaskFormElement.addEventListener('submit', this.onSearchTaskFormSubmit)
     this.searchTaskInputElement.addEventListener('input', this.onSearchTaskInputChange)
     this.deleteAllButtonElement.addEventListener('click', this.onDeleteAllButtonClick)
-    this.listElement.addEventListener('click', this.onCklick)
+    this.listElement.addEventListener('click', this.onClick)
     this.listElement.addEventListener('change', this.onChange)
   }
 
